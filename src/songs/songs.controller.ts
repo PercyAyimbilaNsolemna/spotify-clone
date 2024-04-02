@@ -1,5 +1,6 @@
-import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post } from '@nestjs/common';
 import { SongsService } from './songs.service';
+import { CreateSongDTO } from './dto/create-song-dto';
 
 @Controller('songs')
 export class SongsController {
@@ -19,8 +20,8 @@ export class SongsController {
 
   //Post method to upload a song
   @Post()
-  createSong(song): string[] {
-    return this.songsService.createSong(song);
+  createSong(@Body() createSongDTO: CreateSongDTO): string[] {
+    return this.songsService.createSong(createSongDTO);
   }
 
   //Patch method to update a song
