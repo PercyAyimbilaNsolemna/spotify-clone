@@ -1,11 +1,14 @@
 import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { SongsService } from './songs.service';
 
 @Controller('songs')
 export class SongsController {
+  //Injects the songs servcice to the songs controller
+  constructor(private readonly songsService: SongsService) {}
   //Get request to find all the songs
   @Get()
-  findAllSonngs(): string {
-    return 'Find All Songs ';
+  findAllSongs(): string[] {
+    return this.songsService.findAllSongs();
   }
 
   //Get request to find a song
@@ -16,8 +19,8 @@ export class SongsController {
 
   //Post method to upload a song
   @Post()
-  createSong(): string {
-    return 'Create A Strong';
+  createSong(song): string[] {
+    return this.songsService.createSong(song);
   }
 
   //Patch method to update a song
