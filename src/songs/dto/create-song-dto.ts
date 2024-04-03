@@ -14,7 +14,7 @@ export class CreateSongDTO {
   @IsNotEmpty()
   @IsArray()
   //This validates that each item in the array is a string
-  //@IsString({ each: true })
+  @IsString({ each: true })
   readonly artists: string[];
 
   @IsNotEmpty()
