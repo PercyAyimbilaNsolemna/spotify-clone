@@ -10,9 +10,9 @@ export class SongsService {
   }
 
   findAllSongs(): string[] {
-    throw new Error(
-      'There was an error whiles fetching record from the database',
-    );
+    // throw new Error(
+    //   'There was an error whiles fetching record from the database',
+    // );
     return this.songs;
   }
 }
