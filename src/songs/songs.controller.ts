@@ -15,6 +15,7 @@ export class SongsController {
   //Get request to find a song
   @Get(':id')
   findOneSong(): string {
+    throw new Error('I am testing the error message');
     return 'Find A Song';
   }
 
