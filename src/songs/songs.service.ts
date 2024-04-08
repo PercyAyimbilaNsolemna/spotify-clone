@@ -21,10 +21,10 @@ export class SongsService {
     return await this.songsRepository.save(song);
   }
 
-  findAllSongs(): string {
+  async findAllSongs(): Promise<Song[]> {
     // throw new Error(
     //   'There was an error whiles fetching record from the database',
     // );
-    return 'Working on it';
+    return await this.songsRepository.find();
   }
 }

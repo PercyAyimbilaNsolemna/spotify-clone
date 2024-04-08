@@ -29,7 +29,7 @@ export class SongsController {
   }
   //Get request to find all the songs
   @Get()
-  findAllSongs(): string {
+  findAllSongs(): Promise<Song[]> {
     try {
       return this.songsService.findAllSongs();
     } catch (e) {
