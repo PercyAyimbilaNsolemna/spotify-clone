@@ -1,18 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { Song } from './Entities/songs.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateSongDTO } from './dto/create-song-dto';
 
 @Injectable()
 export class SongsService {
-  private readonly songs = [];
+  constructor(
+    @InjectRepository(Song) private songsRepository: Repository<Song>,
+  ) {}
 
-  createSong(song): string[] {
-    this.songs.push(song);
-    return this.songs;
+  async createSong(createSongDTO: CreateSongDTO): Promise<Song> {
+    const song = new Song();
+    song.title = createSongDTO.title;
+    song.artist = createSongDTO.artists;
+    song.releaseDate = createSongDTO.releaseDate;
+    song.duration = createSongDTO.duration;
+    song.lyrics = createSongDTO.lyrics;
+
+    return await this.songsRepository.save(song);
   }
 
-  findAllSongs(): string[] {
+  findAllSongs(): string {
     // throw new Error(
     //   'There was an error whiles fetching record from the database',
     // );
-    return this.songs;
+    return 'Working on it';
   }
 }

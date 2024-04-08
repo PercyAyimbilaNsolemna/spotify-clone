@@ -14,6 +14,7 @@ import {
 import { SongsService } from './songs.service';
 import { CreateSongDTO } from './dto/create-song-dto';
 import { Connection } from 'src/common/constants/connection';
+import { Song } from './Entities/songs.entity';
 
 @Controller('songs')
 export class SongsController {
@@ -28,7 +29,7 @@ export class SongsController {
   }
   //Get request to find all the songs
   @Get()
-  findAllSongs(): string[] {
+  findAllSongs(): string {
     try {
       return this.songsService.findAllSongs();
     } catch (e) {
@@ -55,7 +56,7 @@ export class SongsController {
 
   //Post method to upload a song
   @Post()
-  createSong(@Body() createSongDTO: CreateSongDTO): string[] {
+  createSong(@Body() createSongDTO: CreateSongDTO): Promise<Song> {
     return this.songsService.createSong(createSongDTO);
   }
 
