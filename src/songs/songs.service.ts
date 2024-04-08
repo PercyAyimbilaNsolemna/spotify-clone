@@ -4,6 +4,11 @@ import { Song } from './Entities/songs.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateSongDTO } from './dto/create-song-dto';
 import { UpdateSongDTO } from './dto/update-song-dto';
+import {
+  IPaginationOptions,
+  Pagination,
+  paginate,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class SongsService {
@@ -16,11 +21,18 @@ export class SongsService {
     const song = new Song();
     song.title = createSongDTO.title;
     song.artists = createSongDTO.artists;
-    song.releaseDate = createSongDTO.releaseDate;
+    song.releasedDate = createSongDTO.releasedDate;
     song.duration = createSongDTO.duration;
     song.lyrics = createSongDTO.lyrics;
 
     return await this.songsRepository.save(song);
+  }
+
+  //Pagination
+  async paginate(options: IPaginationOptions): Promise<Pagination<Song>> {
+    const querybuilder = this.songsRepository.createQueryBuilder('c');
+    querybuilder.orderBy('c.releasedDate', 'DESC');
+    return paginate<Song>(querybuilder, options);
   }
 
   //Method to find all songs
@@ -28,6 +40,7 @@ export class SongsService {
     // throw new Error(
     //   'There was an error whiles fetching record from the database',
     // );
+
     return await this.songsRepository.find();
   }
 
