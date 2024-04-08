@@ -3,7 +3,7 @@ import { SongsController } from './songs.controller';
 import { SongsService } from './songs.service';
 import { connection } from 'src/common/constants/connection';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Song } from './Entities/songs.entity';
+import { Song } from './entities/songs.entity';
 
 // const mockSongsService = {
 //   findAllSongs() {

@@ -6,7 +6,9 @@ import { LoggerMiddleware } from './common/middleware/common/middleware/logger/l
 import { DevConfigService } from './common/providers/DevConfigService';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { Song } from './songs/Entities/songs.entity';
+import { Song } from './songs/entities/songs.entity';
+import { User } from './users/entities/users-entity';
+import { Artist } from './artists/entities/artists-entity';
 
 const devConfig = { port: 3000 };
 
@@ -20,7 +22,7 @@ const proConfig = { port: 4000 };
       username: 'host',
       password: 'host',
       database: 'spotify_clone',
-      entities: [Song],
+      entities: [User, Artist, Song],
       synchronize: true,
     }),
     SongsModule,
