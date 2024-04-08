@@ -9,7 +9,7 @@ export class Song {
   title: string;
 
   @Column('varchar', { array: true })
-  artist: string[];
+  artists: string[];
 
   @Column('date')
   releaseDate: Date;

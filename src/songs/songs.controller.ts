@@ -15,6 +15,8 @@ import { SongsService } from './songs.service';
 import { CreateSongDTO } from './dto/create-song-dto';
 import { Connection } from 'src/common/constants/connection';
 import { Song } from './Entities/songs.entity';
+import { DeleteResult, UpdateResult } from 'typeorm';
+import { UpdateSongDTO } from './dto/update-song-dto';
 
 @Controller('songs')
 export class SongsController {
@@ -62,13 +64,26 @@ export class SongsController {
 
   //Patch method to update a song
   @Patch(':id')
-  updateSong(): string {
-    return 'Update A song';
+  updateSong(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+    @Body() updateSongDTO: UpdateSongDTO,
+  ): Promise<UpdateResult> {
+    return this.songsService.updateSong(id, updateSongDTO);
   }
 
   //Delete method to delete song
   @Delete(':id')
-  deleteSong(): string {
-    return 'Delete Song';
+  deleteSong(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ): Promise<DeleteResult> {
+    return this.songsService.removeSong(id);
   }
 }
