@@ -49,9 +49,9 @@ export class SongsController {
       new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
     id: number,
-  ): string {
+  ): Promise<Song> {
     //console.log(`The data type of the id is ${typeof id}`);
-    return `Fetch song based on id ${typeof id}`;
+    return this.songsService.findOneSong(id);
   }
 
   //Post method to upload a song

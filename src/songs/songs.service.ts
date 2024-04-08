@@ -10,6 +10,7 @@ export class SongsService {
     @InjectRepository(Song) private songsRepository: Repository<Song>,
   ) {}
 
+  //Method to create a new song
   async createSong(createSongDTO: CreateSongDTO): Promise<Song> {
     const song = new Song();
     song.title = createSongDTO.title;
@@ -21,10 +22,16 @@ export class SongsService {
     return await this.songsRepository.save(song);
   }
 
+  //Method to find all songs
   async findAllSongs(): Promise<Song[]> {
     // throw new Error(
     //   'There was an error whiles fetching record from the database',
     // );
     return await this.songsRepository.find();
+  }
+
+  //Method to find a song based on id
+  async findOneSong(id: number): Promise<Song> {
+    return await this.songsRepository.findOneBy({ id });
   }
 }
