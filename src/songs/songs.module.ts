@@ -4,6 +4,7 @@ import { SongsService } from './songs.service';
 import { connection } from 'src/common/constants/connection';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Song } from './entities/songs.entity';
+import { Artist } from 'src/artists/entities/artists-entity';
 
 // const mockSongsService = {
 //   findAllSongs() {
@@ -12,7 +13,7 @@ import { Song } from './entities/songs.entity';
 // };
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Song])],
+  imports: [TypeOrmModule.forFeature([Song, Artist])],
   controllers: [SongsController],
   providers: [
     SongsService,
