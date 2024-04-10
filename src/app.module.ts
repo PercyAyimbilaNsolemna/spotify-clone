@@ -9,6 +9,8 @@ import { DataSource } from 'typeorm';
 import { Song } from './songs/entities/songs.entity';
 import { User } from './users/entities/users-entity';
 import { Artist } from './artists/entities/artists-entity';
+import { UsersModule } from './users/users.module';
+import { ArtistsModule } from './artists/artists.module';
 
 const devConfig = { port: 3000 };
 
@@ -26,6 +28,8 @@ const proConfig = { port: 4000 };
       synchronize: true,
     }),
     SongsModule,
+    UsersModule,
+    ArtistsModule,
   ],
   controllers: [AppController],
   providers: [
