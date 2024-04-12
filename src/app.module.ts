@@ -11,6 +11,8 @@ import { User } from './users/entities/users-entity';
 import { Artist } from './artists/entities/artists-entity';
 import { UsersModule } from './users/users.module';
 import { ArtistsModule } from './artists/artists.module';
+import { Playlist } from './playlists/entities/playlists-entity';
+import { PlaylistsModule } from './playlists/playlists.module';
 
 const devConfig = { port: 3000 };
 
@@ -24,12 +26,13 @@ const proConfig = { port: 4000 };
       username: 'host',
       password: 'host',
       database: 'spotify_clone',
-      entities: [User, Artist, Song],
+      entities: [User, Artist, Song, Playlist],
       synchronize: true,
     }),
     SongsModule,
     UsersModule,
     ArtistsModule,
+    PlaylistsModule,
   ],
   controllers: [AppController],
   providers: [

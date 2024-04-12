@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Playlist } from 'src/playlists/entities/playlists-entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -16,4 +17,8 @@ export class User {
 
   @Column()
   password: string;
+
+  //A user can create many playlists
+  @OneToMany(() => Playlist, (playlist) => playlist.user)
+  playlist: Playlist[];
 }
