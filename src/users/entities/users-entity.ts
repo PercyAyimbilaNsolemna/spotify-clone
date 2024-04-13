@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Playlist } from 'src/playlists/entities/playlists-entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -12,10 +13,12 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
+  //Exclude the password from the response
   @Column()
+  @Exclude()
   password: string;
 
   //A user can create many playlists

@@ -6,8 +6,8 @@ import { User } from './entities/users-entity';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  createNewSong(): Promise<User> {
-    return this.usersService.createNewUser();
-  }
+  // @Post()
+  // createNewSong(): Promise<User> {
+  //   return this.usersService.createNewUser();
+  // }
 }
