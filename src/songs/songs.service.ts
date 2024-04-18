@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, In, Repository, UpdateResult } from 'typeorm';
 import { Song } from './entities/songs.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateSongDTO } from './dto/create-song-dto';
@@ -21,7 +21,7 @@ export class SongsService {
   ) {}
 
   //Method to create a new song
-  async createSong(createSongDTO: CreateSongDTO): Promise<Song> {
+  async createSong(createSongDTO: CreateSongDTO): Promise<string> {
     const song = new Song();
     song.title = createSongDTO.title;
     //song.artists = createSongDTO.artists;
@@ -34,10 +34,12 @@ export class SongsService {
       createSongDTO.artists,
     );
 
-    //Sets the relation with songs annd artists
-    song.artists = artists;
+    console.log(artists);
 
-    return await this.songsRepository.save(song);
+    //Sets the relation with songs and artists
+    song.artists = artists;
+    return 'Done';
+    //return await this.songsRepository.save(song);
   }
 
   //Pagination
