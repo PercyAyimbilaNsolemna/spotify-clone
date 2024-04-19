@@ -11,6 +11,7 @@ import {
   Patch,
   Post,
   Query,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
@@ -60,7 +61,11 @@ export class SongsController {
   @UseGuards(ArtistsJwtGuard)
   //Post method to upload a song
   @Post()
-  createSong(@Body() createSongDTO: CreateSongDTO): Promise<string> {
+  createSong(
+    @Body() createSongDTO: CreateSongDTO,
+    @Request() request,
+  ): Promise<Song> {
+    console.log('User:', request.user);
     return this.songsService.createSong(createSongDTO);
   }
 

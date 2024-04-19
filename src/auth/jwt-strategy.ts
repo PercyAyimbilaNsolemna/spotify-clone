@@ -1,6 +1,7 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { jwtConstatnts } from './constants';
+import { PayloadType } from './types/types';
 
 export class JwtStrategy extends PassportStrategy(Strategy) {
   //Runs first when a protected is accessed
@@ -13,7 +14,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   //The validate method will be called anytime request is made to a protected route
-  async validate(payload: any) {
-    return { userId: payload.userId, email: payload.email };
+  async validate(payload: PayloadType) {
+    return {
+      userId: payload.userId,
+      email: payload.email,
+      artistId: payload.artistId,
+    };
   }
 }
