@@ -17,7 +17,11 @@ export class AuthService {
   ) {}
 
   //Method for signing in to an account
-  async login(loginDTO: LoginDTO): Promise<{ accessToken: string }> {
+  async login(
+    loginDTO: LoginDTO,
+  ): Promise<
+    { accessToken: string } | { validate2FA: string; message: string }
+  > {
     const user = await this.usersService.findOne(loginDTO);
 
     const passwordMatched = await bcrypt.compare(
@@ -37,6 +41,17 @@ export class AuthService {
       if (artist) {
         payload.artistId = artist.id;
         console.log('The code ended here!');
+      }
+
+      //If user has enabled two factor authentication and has the secret key
+      if (user.enable2FA && user.twoFASecret) {
+        //Send the validate token request link
+        //Send the json web token in the response
+        return {
+          validate2FA: 'http://localhost:3000/auth/validate-2fa',
+          message:
+            'Please send the one time password/token from your Google Authenticator App',
+        };
       }
 
       //Creates the access token and returns it
