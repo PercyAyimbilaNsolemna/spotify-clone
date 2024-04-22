@@ -14,6 +14,7 @@ import { AuthService } from './auth.service';
 import { Enable2FAType } from './types/types';
 import { JwtAuthGuard } from './jwt-auth-guard';
 import { ValidateTokenDTO } from './dto/validate-token-dto';
+import { UpdateResult } from 'typeorm';
 
 @Controller('auth')
 export class AuthController {
@@ -53,5 +54,12 @@ export class AuthController {
       req.user.userId,
       validateTokenDTO.token,
     );
+  }
+
+  //Get route to disable two factor authentication
+  @Get('disable-2fa')
+  @UseGuards(JwtAuthGuard)
+  disable2FA(@Request() req): Promise<UpdateResult> {
+    return this.authService.disable2FA(req.user.userId);
   }
 }

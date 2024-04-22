@@ -52,4 +52,12 @@ export class UsersService {
       { enable2FA: true, twoFASecret: secretKey },
     );
   }
+
+  //Method to disable two factor authentication
+  async disable2FA(userId: number): Promise<UpdateResult> {
+    return await this.usersRepository.update(
+      { id: userId },
+      { enable2FA: false, twoFASecret: null },
+    );
+  }
 }

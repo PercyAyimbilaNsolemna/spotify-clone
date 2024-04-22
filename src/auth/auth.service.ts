@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ArtistsService } from 'src/artists/artists.service';
 import { Enable2FAType, PayloadType } from './types/types';
 import * as speakeasy from 'speakeasy';
+import { UpdateResult } from 'typeorm';
 
 @Injectable()
 export class AuthService {
@@ -89,5 +90,10 @@ export class AuthService {
     } catch (err) {
       throw new UnauthorizedException('Error verifying token');
     }
+  }
+
+  //Method to disable two factor authentication
+  async disable2FA(userId: number): Promise<UpdateResult> {
+    return this.usersService.disable2FA(userId);
   }
 }
