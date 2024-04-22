@@ -4,7 +4,8 @@ import { LoginDTO } from './dto/login-dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ArtistsService } from 'src/artists/artists.service';
-import { PayloadType } from './types/types';
+import { Enable2FAType, PayloadType } from './types/types';
+import * as speakeasy from 'speakeasy';
 
 @Injectable()
 export class AuthService {
@@ -43,6 +44,50 @@ export class AuthService {
       };
     } else {
       throw new UnauthorizedException('Password Does NOT Match');
+    }
+  }
+
+  //Method to enable two factor authentication
+  async enable2FA(userId: number): Promise<Enable2FAType> {
+    const user = await this.usersService.findById(userId);
+
+    if (user.enable2FA) {
+      return { secret: user.twoFASecret };
+    }
+
+    const secret = await speakeasy.generateSecret();
+
+    console.log(secret);
+
+    user.twoFASecret = secret.base32;
+
+    await this.usersService.updateSecretKey(userId, user.twoFASecret);
+
+    return { secret: user.twoFASecret };
+  }
+
+  //Method to validate two factor authentication
+  async validate2FAToken(
+    userId: number,
+    token: string,
+  ): Promise<{ verified: boolean }> {
+    try {
+      const user = await this.usersService.findById(userId);
+
+      //Verify the secret with token by calling the verify method from speakeasy
+      const verified = speakeasy.totp.verify({
+        secret: user.twoFASecret,
+        token: token,
+        encoding: 'base32',
+      });
+
+      if (verified) {
+        return { verified: true };
+      } else {
+        return { verified: false };
+      }
+    } catch (err) {
+      throw new UnauthorizedException('Error verifying token');
     }
   }
 }
