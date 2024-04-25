@@ -4,6 +4,7 @@ import { User } from './entities/users-entity';
 import { Repository, UpdateResult } from 'typeorm';
 import { CreateUserDTO } from './dto/create-user-dto';
 import * as bcrypt from 'bcrypt';
+import { v4 as uuid4 } from 'uuid';
 import { LoginDTO } from 'src/auth/dto/login-dto';
 
 @Injectable()
@@ -17,6 +18,7 @@ export class UsersService {
   async createNewUser(createUserDTO: CreateUserDTO): Promise<User> {
     const salt = await bcrypt.genSalt();
     createUserDTO.password = await bcrypt.hash(createUserDTO.password, salt);
+    createUserDTO.apiKey = uuid4();
     const user = await this.usersRepository.save(createUserDTO);
     //Deletes the password field from the response
     delete user.password;
@@ -59,5 +61,10 @@ export class UsersService {
       { id: userId },
       { enable2FA: false, twoFASecret: null },
     );
+  }
+
+  //Method to find a user based on api key
+  async findByApiKey(apiKey: string): Promise<User> {
+    return await this.usersRepository.findOneBy({ apiKey: apiKey });
   }
 }

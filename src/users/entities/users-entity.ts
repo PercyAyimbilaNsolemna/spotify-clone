@@ -27,6 +27,10 @@ export class User {
   @Column({ default: false, type: 'boolean' })
   enable2FA: boolean;
 
+  //Will change the nollable attribute
+  @Column({ nullable: true })
+  apiKey: string;
+
   //A user can create many playlists
   @OneToMany(() => Playlist, (playlist) => playlist.user)
   playlist: Playlist[];

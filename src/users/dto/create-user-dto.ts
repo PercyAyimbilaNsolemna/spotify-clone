@@ -9,9 +9,12 @@ export class CreateUserDTO {
   @IsNotEmpty()
   lastName: string;
 
+  apiKey: string;
+
   @IsEmail()
   @IsNotEmpty()
   email: string;
+
   @IsString()
   @IsNotEmpty()
   password: string;
